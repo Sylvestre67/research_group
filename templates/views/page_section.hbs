@@ -1,28 +1,20 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-			<article>
-				<hr>
-				<header>
-
-				{{#if data.pages}}
-					<h1>{{data.section.title}}</h1>
-				{{ else }}
-					<p>Coming soon...</p>
-				{{/if}}
-
-				</header>
-				{{#if data.pages}}
-					{{#each data.pages}}
+			{{#if data.pages}}
+				{{#each data.pages}}
+					<section>
 						<div class="intro">
-							{{{data.pages.content.intro}}}
+							{{{content.intro}}}
 						</div>
 						<div class="post">
-							{{{data.pages.content.body}}}
+							{{{content.body}}}
 						</div>
-					{{/each}}
-				{{/if}}
-			</article>
+					</section>
+				{{/each}}
+			{{ else }}
+				<p>Coming soon...</p>
+			{{/if}}
 		</div>
 	</div>
 </div>

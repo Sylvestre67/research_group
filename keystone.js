@@ -34,6 +34,18 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
+
+	'wysiwyg cloudinary images':true,
+	'wysiwyg override toolbar': false,
+	'wysiwyg menubar': true,
+	'wysiwyg skin': 'lightgray',
+	'wysiwyg additional buttons': 'searchreplace visualchars,'
+	+ ' charmap ltr rtl pagebreak paste'
+	+' preview print ',
+	'wysiwyg additional plugins': 'wordcount',
+	'wysiwyg additional options': {
+		'external_plugins': {'uploadimage': '/js/uploadimage/plugin.min.js'}
+	}
 });
 
 // Load your project's Models
