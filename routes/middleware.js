@@ -8,7 +8,7 @@
  * modules in your project's /lib directory.
  */
 var _ = require('lodash');
-
+var keystone = require('keystone');
 
 /**
 	Initialises the standard view locals
@@ -18,16 +18,33 @@ var _ = require('lodash');
 	or replace it with your own templates / logic.
 */
 exports.initLocals = function (req, res, next) {
-	res.locals.navLinks = [
-		{ label: 'Home', key: 'home', href: '/' },
-		{ label: 'Blog', key: 'blog', href: '/blog' },
-		{ label: 'Gallery', key: 'gallery', href: '/gallery' },
-		{ label: 'Contact', key: 'contact', href: '/contact' },
-	];
-	res.locals.user = req.user;
-	next();
-};
 
+	var Section = keystone.list('PageSection').model;
+	var q_section;
+
+
+		q_section = Section.find();
+		q_section.exec(function (err, result) {
+
+			res.locals.navLinks = [
+				{ label: 'Home', key: 'home', href: '/' },
+				{ label: 'Publications', key: 'publications', href: '/publications' },
+				{ label: 'Contact', key: 'contact', href: '/contact' },
+			];
+
+			result.forEach(function(v,i){
+				res.locals.navLinks.splice(v.position, 0,
+					{ label: v.name,
+					  key: v.name,
+					  href:'/p/%s'.replace('%s',v.slug) }
+				)
+			});
+
+			res.locals.user = req.user;
+			next();
+		});
+
+};
 
 /**
 	Fetches and clears the flashMessages before a view is rendered
